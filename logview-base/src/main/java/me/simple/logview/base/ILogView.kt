@@ -1,4 +1,6 @@
-package me.simple.logview
+package me.simple.logview.base
+
+import android.app.Application
 
 interface ILogView {
 
@@ -11,4 +13,6 @@ interface ILogView {
     fun w(tag: String, msg: String)
 
     fun e(tag: String, msg: String)
+
+    fun init(app: Application)
 }
