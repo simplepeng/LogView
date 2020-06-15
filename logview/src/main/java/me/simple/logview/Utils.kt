@@ -1,57 +1,34 @@
 package me.simple.logview
 
-import android.app.Activity
+import android.annotation.TargetApi
 import android.content.Context
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.FrameLayout
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
+import android.provider.Settings
+
 
 internal object Utils {
 
-    fun getActivityRoot(activity: Activity): FrameLayout? {
-        return try {
-            activity.window.decorView
-                    .findViewById(android.R.id.content) as FrameLayout
-        } catch (e: Exception) {
-            null
+    lateinit var context: Context
+
+    @TargetApi(Build.VERSION_CODES.M)
+    fun reqWindowPermission() {
+        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + context.packageName))
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        context.startActivity(intent)
+    }
+
+    fun canShowWindow(): Boolean {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return Settings.canDrawOverlays(context)
         }
+        return true
     }
 
-    private var logViewMenu: LogMenu? = null
-
-    @Synchronized
-    fun getLogViewMenu(context: Context): LogMenu {
-        if (logViewMenu == null) {
-            logViewMenu = LogMenu(context)
-        }
-        return logViewMenu!!
+    fun init(context: Context) {
+        this.context = context
     }
 
-    fun createLayoutParams(height: Int = FrameLayout.LayoutParams.WRAP_CONTENT): FrameLayout.LayoutParams {
-        return FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.WRAP_CONTENT,
-                height
-        ).apply {
-//            gravity = Gravity.TOP
-        }
-    }
-
-    fun getLogWindow(
-            context: Context,
-            parent: ViewGroup
-    ): View {
-        return LayoutInflater.from(context).inflate(R.layout.layout_log_window, parent, false)
-    }
-
-    fun getScreenHeight(context: Context) = context.resources.displayMetrics.heightPixels
-
-    fun getStatusBarHeight(context: Context): Int {
-        var result = 0
-        val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = context.resources.getDimensionPixelSize(resourceId)
-        }
-        return result
-    }
+    fun getScreenHeight() = context.resources.displayMetrics.heightPixels
 }
