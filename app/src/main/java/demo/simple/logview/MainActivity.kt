@@ -28,6 +28,18 @@ class MainActivity : AppCompatActivity() {
             LogView.d(tag, "")
         }
 
+        btnLogI.setOnClickListener {
+            LogView.i(tag, "")
+        }
+
+        btnLogW.setOnClickListener {
+            LogView.w(tag, "")
+        }
+
+        btnLogE.setOnClickListener {
+            LogView.e(tag, "")
+        }
+
         btnShow.performClick()
     }
 }

@@ -38,4 +38,28 @@
         android:text="LogV"
         app:layout_constraintBottom_toTopOf="@+id/btnLogD"
         app:layout_constraintStart_toEndOf="@+id/btnDismiss" />
+
+    <Button
+        android:id="@+id/btnLogI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogI"
+        app:layout_constraintStart_toEndOf="@id/btnLogV"
+        app:layout_constraintTop_toTopOf="@id/btnLogV" />
+
+    <Button
+        android:id="@+id/btnLogW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogW"
+        app:layout_constraintStart_toEndOf="@id/btnLogD"
+        app:layout_constraintTop_toTopOf="@id/btnLogD" />
+
+    <Button
+        android:id="@+id/btnLogE"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogE"
+        app:layout_constraintStart_toEndOf="@id/btnLogI"
+        app:layout_constraintTop_toTopOf="@id/btnLogV" />
 </androidx.constraintlayout.widget.ConstraintLayout>
