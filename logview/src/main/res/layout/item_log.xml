@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/tvTag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="D/Tag ----- 2020-06-15 20:19:05.259" />
+
+    <TextView
+        android:id="@+id/tvMsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="|[seq:umeng:5e4b42040cafb288f8000257.AWCN1_1] https://umengacs.m.taobao.com submit ping ms:45059 force:true" />
+</LinearLayout>

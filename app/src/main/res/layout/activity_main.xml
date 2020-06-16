@@ -10,10 +10,32 @@
         android:id="@+id/btnShow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="Show"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <Button
+        android:id="@+id/btnDismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="dismiss"
+        app:layout_constraintBottom_toTopOf="@+id/btnShow"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnLogD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogD"
+        app:layout_constraintStart_toEndOf="@+id/btnShow"
+        app:layout_constraintTop_toTopOf="@+id/btnShow" />
+
+    <Button
+        android:id="@+id/btnLogV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="LogV"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogD"
+        app:layout_constraintStart_toEndOf="@+id/btnDismiss" />
 </androidx.constraintlayout.widget.ConstraintLayout>

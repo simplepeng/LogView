@@ -9,6 +9,9 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import java.util.Collections.max
 
 
@@ -18,12 +21,20 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     private val mParams = WindowManager.LayoutParams()
     private val mIvMenu by lazy { findViewById<ImageView>(R.id.ivMenu) }
     private val mViewContent by lazy { findViewById<View>(R.id.viewContent) }
+    private val mRecyclerView by lazy { findViewById<RecyclerView>(R.id.rvLog) }
+    private val mLogList = mutableListOf<LogBean>()
+    private val mAdapter = LogAdapter(mLogList)
 
     init {
         View.inflate(context, R.layout.layout_log_view, this)
         mIvMenu.setOnClickListener {
             clickMenu()
         }
+        mRecyclerView.layoutManager = LinearLayoutManager(context).apply {
+            stackFromEnd = true
+        }
+        mRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        mRecyclerView.adapter = mAdapter
     }
 
     private fun clickMenu() {
@@ -47,6 +58,7 @@ class WindowLayout(context: Context) : FrameLayout(context) {
 
     fun dismiss() {
         try {
+            mViewContent.visibility = View.GONE
             mWM.removeView(this)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -103,5 +115,11 @@ class WindowLayout(context: Context) : FrameLayout(context) {
             }
         }
         return true
+    }
+
+    fun add(logBean: LogBean) {
+        mLogList.add(logBean)
+        mAdapter.notifyItemInserted(mLogList.lastIndex)
+        mRecyclerView.scrollToPosition(mLogList.lastIndex)
     }
 }

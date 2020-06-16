@@ -17,4 +17,6 @@ interface ILogView {
     fun init(app: Application)
 
     fun show()
+
+    fun dismiss()
 }

@@ -10,8 +10,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val tag = "MainActivity"
+
         btnShow.setOnClickListener {
             LogView.show()
         }
+
+        btnDismiss.setOnClickListener {
+            LogView.dismiss()
+        }
+
+        btnLogV.setOnClickListener {
+            LogView.v(tag, "")
+        }
+
+        btnLogD.setOnClickListener {
+            LogView.d(tag, "")
+        }
+
+        btnShow.performClick()
     }
 }
