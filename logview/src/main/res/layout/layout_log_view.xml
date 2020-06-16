@@ -2,13 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/viewContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="25dp"
+        android:background="@android:color/white"
         android:orientation="vertical"
         android:visibility="gone"
         tools:visibility="visible">
@@ -45,5 +46,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
+        android:src="@drawable/ic_log_menu" />
+
+    <ImageView
+        android:id="@+id/resizeView"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom|center_horizontal"
         android:src="@drawable/ic_log_menu" />
 </FrameLayout>

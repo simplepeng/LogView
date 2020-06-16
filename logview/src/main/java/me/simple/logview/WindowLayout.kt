@@ -1,5 +1,6 @@
 package me.simple.logview
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Build
@@ -12,7 +13,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.util.Collections.max
 
 
 class WindowLayout(context: Context) : FrameLayout(context) {
@@ -22,6 +22,8 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     private val mIvMenu by lazy { findViewById<ImageView>(R.id.ivMenu) }
     private val mViewContent by lazy { findViewById<View>(R.id.viewContent) }
     private val mRecyclerView by lazy { findViewById<RecyclerView>(R.id.rvLog) }
+    private val mResizeView by lazy { findViewById<View>(R.id.resizeView) }
+
     private val mLogList = mutableListOf<LogBean>()
     private val mAdapter = LogAdapter(mLogList)
 
@@ -33,19 +35,17 @@ class WindowLayout(context: Context) : FrameLayout(context) {
         mRecyclerView.layoutManager = LinearLayoutManager(context).apply {
             stackFromEnd = true
         }
-        mRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        mRecyclerView.addItemDecoration(
+            DividerItemDecoration(
+                context,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         mRecyclerView.adapter = mAdapter
+
+        resizeViewSetTouch()
     }
 
-    private fun clickMenu() {
-        if (mViewContent.visibility == View.GONE) {
-            mViewContent.visibility = View.VISIBLE
-            mWM.updateViewLayout(this, matchLayoutParams())
-        } else {
-            mViewContent.visibility = View.GONE
-            mWM.updateViewLayout(this, wrapLayoutParams())
-        }
-    }
 
     fun show() {
         if (isShown) return
@@ -92,6 +92,12 @@ class WindowLayout(context: Context) : FrameLayout(context) {
         //        mLayoutParams.y = attr.y
     }
 
+    private fun resizeHeight(moveY: Int): WindowManager.LayoutParams {
+        val height = mParams.height
+        mParams.height = height + moveY
+        return mParams
+    }
+
     private var downX = 0f
     private var downY = 0f
     private var lastY = 0f
@@ -121,5 +127,35 @@ class WindowLayout(context: Context) : FrameLayout(context) {
         mLogList.add(logBean)
         mAdapter.notifyItemInserted(mLogList.lastIndex)
         mRecyclerView.scrollToPosition(mLogList.lastIndex)
+    }
+
+    private fun clickMenu() {
+        if (mViewContent.visibility == View.GONE) {
+            mViewContent.visibility = View.VISIBLE
+            mWM.updateViewLayout(this, matchLayoutParams())
+        } else {
+            mViewContent.visibility = View.GONE
+            mWM.updateViewLayout(this, wrapLayoutParams())
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun resizeViewSetTouch() {
+        var downY = 0
+        mResizeView.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    downY = event.y.toInt()
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    val moveY = event.y.toInt() - downY
+                    mWM.updateViewLayout(this, resizeHeight(moveY))
+                    downY = event.y.toInt()
+                }
+                MotionEvent.ACTION_UP -> {
+                }
+            }
+            true
+        }
     }
 }
