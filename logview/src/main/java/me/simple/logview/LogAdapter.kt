@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class LogAdapter(private val items: MutableList<LogBean>) :
-        RecyclerView.Adapter<LogAdapter.LogHolder>() {
+    RecyclerView.Adapter<LogAdapter.LogHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -18,8 +18,13 @@ class LogAdapter(private val items: MutableList<LogBean>) :
 
     override fun onBindViewHolder(holder: LogHolder, position: Int) {
         val item = items[holder.adapterPosition]
+        val color = Utils.getColor(item.priority)
+
         holder.tvTag.run {
-            Utils.colorMap[item.priority]?.let { setTextColor(it) }
+            setTextColor(color)
+        }
+        holder.tvMsg.run {
+            setTextColor(color)
         }
     }
 

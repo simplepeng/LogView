@@ -14,6 +14,7 @@ interface ILogView {
 
     fun e(tag: String, msg: String)
 
+    fun init(app: Application, config: Config)
     fun init(app: Application)
 
     fun show()

@@ -3,9 +3,11 @@ package me.simple.logview
 import android.annotation.TargetApi
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import me.simple.logview.base.Config
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -13,13 +15,16 @@ import java.util.*
 internal object Utils {
 
     private lateinit var context: Context
+    private lateinit var config: Config
     private val df = SimpleDateFormat("yyyy-MM-dd mm:hh:ss", Locale.CHINA)
     private val mWindowLayout: WindowLayout by lazy { WindowLayout(Utils.context) }
-    val colorMap = mutableMapOf<String, Int>()
 
     @TargetApi(Build.VERSION_CODES.M)
     fun reqWindowPermission() {
-        val intent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + context.packageName))
+        val intent = Intent(
+            Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+            Uri.parse("package:" + context.packageName)
+        )
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         context.startActivity(intent)
     }
@@ -31,8 +36,9 @@ internal object Utils {
         return true
     }
 
-    fun init(context: Context) {
+    fun init(context: Context, config: Config) {
         this.context = context
+        this.config = config
     }
 
     fun getScreenHeight() = context.resources.displayMetrics.heightPixels
@@ -54,5 +60,14 @@ internal object Utils {
 
     fun add(logBean: LogBean) {
         mWindowLayout.add(logBean)
+    }
+
+    fun getColor(priority: String) = when (priority) {
+        LogBean.VERBOSE -> config.vColorInt
+        LogBean.DEBUG -> config.dColorInt
+        LogBean.INFO -> config.iColorInt
+        LogBean.WARN -> config.wColorInt
+        LogBean.ERROR -> config.eColorInt
+        else -> Color.parseColor("#999999")
     }
 }
