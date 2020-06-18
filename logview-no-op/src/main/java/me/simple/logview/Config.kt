@@ -1,4 +1,4 @@
-package me.simple.logview.base
+package me.simple.logview
 
 import android.graphics.Color
 import androidx.annotation.ColorInt

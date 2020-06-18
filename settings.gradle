@@ -1,4 +1,3 @@
-include ':logview-base'
 include ':logview-no-op'
 include ':logview'
 include ':app'

@@ -29,7 +29,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
-    api project(path: ':logview-base')
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+//    api project(path: ':logview-base')
 }
 
 publish {

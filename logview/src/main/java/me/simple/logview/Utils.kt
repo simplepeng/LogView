@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import me.simple.logview.base.Config
 import java.text.SimpleDateFormat
 import java.util.*
 
