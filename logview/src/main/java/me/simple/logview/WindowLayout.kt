@@ -13,6 +13,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.layout_log_view.view.*
 
 
 class WindowLayout(context: Context) : FrameLayout(context) {
@@ -29,9 +30,9 @@ class WindowLayout(context: Context) : FrameLayout(context) {
 
     init {
         View.inflate(context, R.layout.layout_log_view, this)
-        mIvMenu.setOnClickListener {
-            clickMenu()
-        }
+//        mIvMenu.setOnClickListener {
+//            clickMenu()
+//        }
         mRecyclerView.layoutManager = LinearLayoutManager(context).apply {
             stackFromEnd = true
         }
@@ -43,7 +44,8 @@ class WindowLayout(context: Context) : FrameLayout(context) {
         )
         mRecyclerView.adapter = mAdapter
 
-        resizeViewSetTouch()
+        setMenuTouch()
+        setResizeViewTouch()
     }
 
 
@@ -102,27 +104,6 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     private var downY = 0f
     private var lastY = 0f
 
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-//        super.onTouchEvent(event)
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                downX = event.rawX
-                downY = event.rawY
-                lastY = downY
-            }
-            MotionEvent.ACTION_MOVE -> {
-                mParams.y += (event.rawY - lastY).toInt()
-                mParams.y = kotlin.math.max(0, mParams.y)
-                mWM.updateViewLayout(this, mParams)
-                lastY = event.rawY
-            }
-            MotionEvent.ACTION_UP -> {
-
-            }
-        }
-        return true
-    }
-
     fun add(logBean: LogBean) {
         mLogList.add(logBean)
         mAdapter.notifyItemInserted(mLogList.lastIndex)
@@ -132,15 +113,45 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     private fun clickMenu() {
         if (mViewContent.visibility == View.GONE) {
             mViewContent.visibility = View.VISIBLE
+            mResizeView.visibility = View.VISIBLE
             mWM.updateViewLayout(this, matchLayoutParams())
         } else {
             mViewContent.visibility = View.GONE
+            mResizeView.visibility = View.INVISIBLE
             mWM.updateViewLayout(this, wrapLayoutParams())
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    private fun resizeViewSetTouch() {
+    private fun setMenuTouch() {
+        var downTime = 0L
+        ivMenu.setOnTouchListener { v, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    downTime = System.currentTimeMillis()
+                    downX = event.rawX
+                    downY = event.rawY
+                    lastY = downY
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    mParams.y += (event.rawY - lastY).toInt()
+                    mParams.y = kotlin.math.max(0, mParams.y)
+                    mWM.updateViewLayout(this, mParams)
+                    lastY = event.rawY
+                }
+                MotionEvent.ACTION_UP -> {
+                    val upTime = System.currentTimeMillis() - downTime
+                    if (upTime < 100) {
+                        clickMenu()
+                    }
+                }
+            }
+            true
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setResizeViewTouch() {
         var downY = 0
         mResizeView.setOnTouchListener { v, event ->
             when (event.action) {
