@@ -18,7 +18,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <Button
                 android:layout_width="wrap_content"
@@ -38,17 +39,17 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvLog"
-            tools:background="@android:color/holo_red_dark"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="5dp" />
+            tools:background="@android:color/holo_red_dark" />
     </LinearLayout>
 
     <ImageView
         android:id="@+id/ivMenu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/sp_menu_bg"
+        android:padding="8dp"
         android:src="@drawable/ic_log_menu" />
 
     <ImageView
@@ -62,12 +63,12 @@
 
     <ImageView
         android:id="@+id/ivClose"
-        android:scaleType="fitXY"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginBottom="13dp"
         android:layout_gravity="end|bottom"
+        android:layout_marginBottom="13dp"
         android:rotation="315"
+        android:scaleType="fitXY"
         android:src="@drawable/ic_close"
         android:visibility="gone"
         tools:visibility="visible" />
