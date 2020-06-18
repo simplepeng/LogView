@@ -10,12 +10,23 @@
         android:id="@+id/tvTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="D/Tag ----- 2020-06-15 20:19:05.259" />
+        android:textSize="14dp"
+        tools:text="D：Tag" />
 
     <TextView
         android:id="@+id/tvMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="|[seq:umeng:5e4b42040cafb288f8000257.AWCN1_1] https://umengacs.m.taobao.com submit ping ms:45059 force:true" />
+        android:layout_marginTop="5dp"
+        android:textSize="13dp"
+        android:lineSpacingExtra="5dp"
+        tools:text="|[seq:umeng:5e4b42040cafb288f8000257.AWCN1_1] https://umengacs.m.taobao.com submit ping ms:45059 force:true" />
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:textSize="11dp"
+        tools:text="2020-06-15 20:19:05.259" />
 </LinearLayout>

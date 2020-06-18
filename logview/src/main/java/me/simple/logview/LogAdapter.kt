@@ -22,14 +22,21 @@ class LogAdapter(private val items: MutableList<LogBean>) :
 
         holder.tvTag.run {
             setTextColor(color)
+            text = String.format("%s：%s", item.priority, item.tag)
         }
         holder.tvMsg.run {
             setTextColor(color)
+            text = item.msg
+        }
+        holder.tvTime.run {
+            setTextColor(color)
+            text = item.time
         }
     }
 
     class LogHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvTag = itemView.findViewById<TextView>(R.id.tvTag)
-        val tvMsg = itemView.findViewById<TextView>(R.id.tvMsg)
+        val tvTag = itemView.findViewById<TextView>(R.id.tvTag)!!
+        val tvMsg = itemView.findViewById<TextView>(R.id.tvMsg)!!
+        val tvTime = itemView.findViewById<TextView>(R.id.tvTime)!!
     }
 }
