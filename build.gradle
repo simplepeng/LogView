@@ -33,7 +33,8 @@ ext{
     artifactId = 'logview'
     publishVersion = '1.0.0'
 
-
+    no_op_artifactId = 'logview-no-op'
+    no_op_publishVersion = '1.0.0'
 
     desc = '一个应用内的log'
     website = 'https://github.com/simplepeng/LogView'

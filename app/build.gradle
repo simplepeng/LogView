@@ -53,4 +53,6 @@ dependencies {
     //
     debugImplementation project(path: ':logview')
     releaseImplementation project(path: ':logview-no-op')
+    //
+//    implementation 'me.simple:logview:1.0.0'
 }

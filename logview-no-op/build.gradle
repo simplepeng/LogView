@@ -2,6 +2,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.novoda.bintray-release'
+
 android {
     compileSdkVersion 29
 
@@ -28,4 +30,13 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     api project(path: ':logview-base')
+}
+
+publish {
+    userOrg = rootProject.ext.userOrg
+    groupId = rootProject.ext.groupId
+    artifactId = rootProject.ext.no_op_artifactId
+    publishVersion = rootProject.ext.no_op_publishVersion
+    desc = rootProject.ext.desc
+    website = rootProject.ext.website
 }
