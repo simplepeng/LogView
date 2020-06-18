@@ -2,28 +2,18 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'com.novoda.bintray-release'
+
 android {
     compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
-
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles "consumer-rules.pro"
     }
 
     kotlinOptions {
         jvmTarget = "1.8"
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
     }
 }
 
@@ -34,4 +24,13 @@ dependencies {
     //
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     api project(path: ':logview-base')
+}
+
+publish {
+    userOrg = rootProject.ext.userOrg
+    groupId = rootProject.ext.groupId
+    artifactId = rootProject.ext.artifactId
+    publishVersion = rootProject.ext.publishVersion
+    desc = rootProject.ext.desc
+    website = rootProject.ext.website
 }
