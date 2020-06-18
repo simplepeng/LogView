@@ -9,10 +9,10 @@ class Config {
     var vColorInt = Color.parseColor("#666666")
 
     @ColorInt
-    var dColorInt = Color.parseColor("#00FFFF")
+    var dColorInt = Color.parseColor("#1296DB")
 
     @ColorInt
-    var iColorInt = Color.parseColor("#00FF7F")
+    var iColorInt = Color.parseColor("#1AFA29")
 
     @ColorInt
     var wColorInt = Color.parseColor("#FFEE00")

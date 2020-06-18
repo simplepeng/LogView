@@ -28,6 +28,7 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     private val mRecyclerView by lazy { findViewById<RecyclerView>(R.id.rvLog) }
     private val mResizeView by lazy { findViewById<View>(R.id.resizeView) }
     private val mEtTag by lazy { findViewById<EditText>(R.id.etTag) }
+    private val mIvClose by lazy { findViewById<ImageView>(R.id.ivClose) }
 
     private var mResizedHeight = 0
 
@@ -53,6 +54,10 @@ class WindowLayout(context: Context) : FrameLayout(context) {
         mEtTag.setOnFocusChangeListener { v, hasFocus ->
             Log.d(TAG, "hasFocus == $hasFocus")
         }
+
+        mIvClose.setOnClickListener {
+            hideContent()
+        }
     }
 
 
@@ -67,8 +72,7 @@ class WindowLayout(context: Context) : FrameLayout(context) {
 
     fun dismiss() {
         try {
-            mViewContent.visibility = View.GONE
-            mResizeView.visibility = View.GONE
+            hideContent()
             mWM.removeView(this)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -124,15 +128,23 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     }
 
     private fun clickMenu() {
-        if (mViewContent.visibility == View.GONE) {
-            mViewContent.visibility = View.VISIBLE
-            mResizeView.visibility = View.VISIBLE
-            mWM.updateViewLayout(this, matchLayoutParams())
-        } else {
-            mViewContent.visibility = View.GONE
-            mResizeView.visibility = View.INVISIBLE
-            mWM.updateViewLayout(this, wrapLayoutParams())
-        }
+        showContent()
+    }
+
+    private fun showContent() {
+        mViewContent.visibility = View.VISIBLE
+        mResizeView.visibility = View.VISIBLE
+        mIvMenu.visibility = View.GONE
+        mIvClose.visibility = View.VISIBLE
+        mWM.updateViewLayout(this, matchLayoutParams())
+    }
+
+    private fun hideContent() {
+        mViewContent.visibility = View.GONE
+        mResizeView.visibility = View.INVISIBLE
+        mIvMenu.visibility = View.VISIBLE
+        mIvClose.visibility = View.GONE
+        mWM.updateViewLayout(this, wrapLayoutParams())
     }
 
     @SuppressLint("ClickableViewAccessibility")
