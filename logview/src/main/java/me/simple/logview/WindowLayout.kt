@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.PixelFormat
 import android.os.Build
+import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -20,19 +22,20 @@ class WindowLayout(context: Context) : FrameLayout(context) {
 
     private val mWM = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
     private val mParams = WindowManager.LayoutParams()
+
     private val mIvMenu by lazy { findViewById<ImageView>(R.id.ivMenu) }
     private val mViewContent by lazy { findViewById<View>(R.id.viewContent) }
     private val mRecyclerView by lazy { findViewById<RecyclerView>(R.id.rvLog) }
     private val mResizeView by lazy { findViewById<View>(R.id.resizeView) }
+    private val mEtTag by lazy { findViewById<EditText>(R.id.etTag) }
+
+    private var mResizedHeight = 0
 
     private val mLogList = mutableListOf<LogBean>()
     private val mAdapter = LogAdapter(mLogList)
 
     init {
         View.inflate(context, R.layout.layout_log_view, this)
-//        mIvMenu.setOnClickListener {
-//            clickMenu()
-//        }
         mRecyclerView.layoutManager = LinearLayoutManager(context).apply {
             stackFromEnd = true
         }
@@ -46,6 +49,10 @@ class WindowLayout(context: Context) : FrameLayout(context) {
 
         setMenuTouch()
         setResizeViewTouch()
+
+        mEtTag.setOnFocusChangeListener { v, hasFocus ->
+            Log.d(TAG, "hasFocus == $hasFocus")
+        }
     }
 
 
@@ -61,6 +68,7 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     fun dismiss() {
         try {
             mViewContent.visibility = View.GONE
+            mResizeView.visibility = View.GONE
             mWM.removeView(this)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -76,7 +84,11 @@ class WindowLayout(context: Context) : FrameLayout(context) {
 
     private fun matchLayoutParams(): WindowManager.LayoutParams {
         mParams.width = LayoutParams.MATCH_PARENT
-        mParams.height = Utils.getScreenHeight() / 2
+        mParams.height = if (mResizedHeight == 0) {
+            Utils.getScreenHeight() / 2
+        } else {
+            mResizedHeight
+        }
         basicLayoutParams()
         return mParams
     }
@@ -95,8 +107,9 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     }
 
     private fun resizeHeight(moveY: Int): WindowManager.LayoutParams {
-        val height = mParams.height
-        mParams.height = height + moveY
+        val height = mParams.height + moveY
+        this.mResizedHeight = height
+        mParams.height = height
         return mParams
     }
 
@@ -125,7 +138,7 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     @SuppressLint("ClickableViewAccessibility")
     private fun setMenuTouch() {
         var downTime = 0L
-        ivMenu.setOnTouchListener { v, event ->
+        ivMenu.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     downTime = System.currentTimeMillis()
@@ -141,7 +154,7 @@ class WindowLayout(context: Context) : FrameLayout(context) {
                 }
                 MotionEvent.ACTION_UP -> {
                     val upTime = System.currentTimeMillis() - downTime
-                    if (upTime < 100) {
+                    if (upTime < 150) {
                         clickMenu()
                     }
                 }
@@ -156,17 +169,21 @@ class WindowLayout(context: Context) : FrameLayout(context) {
         mResizeView.setOnTouchListener { v, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
-                    downY = event.y.toInt()
+                    downY = event.rawY.toInt()
                 }
                 MotionEvent.ACTION_MOVE -> {
-                    val moveY = event.y.toInt() - downY
+                    val moveY = event.rawY.toInt() - downY
                     mWM.updateViewLayout(this, resizeHeight(moveY))
-                    downY = event.y.toInt()
+                    downY = event.rawY.toInt()
                 }
                 MotionEvent.ACTION_UP -> {
                 }
             }
             true
         }
+    }
+
+    companion object {
+        const val TAG = "WindowLayout"
     }
 }

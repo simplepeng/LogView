@@ -6,18 +6,18 @@ import androidx.annotation.ColorInt
 class Config {
 
     @ColorInt
-    var vColorInt = Color.parseColor("#BBBBBB")
+    var vColorInt = Color.parseColor("#666666")
 
     @ColorInt
-    var dColorInt = Color.parseColor("#59ABBB")
+    var dColorInt = Color.parseColor("#00FFFF")
 
     @ColorInt
-    var iColorInt = Color.parseColor("#59FB41")
+    var iColorInt = Color.parseColor("#00FF7F")
 
     @ColorInt
-    var wColorInt = Color.parseColor("#FFF56E")
+    var wColorInt = Color.parseColor("#FFEE00")
 
     @ColorInt
-    var eColorInt = Color.parseColor("#FF6B68")
+    var eColorInt = Color.parseColor("#FF0000")
 
 }
