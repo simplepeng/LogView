@@ -49,14 +49,12 @@ class WindowLayout(context: Context) : FrameLayout(context) {
 
         setMenuTouch()
         setResizeViewTouch()
+        setCloseViewTouch()
 
         mEtTag.setOnFocusChangeListener { v, hasFocus ->
             Log.d(TAG, "hasFocus == $hasFocus")
         }
 
-        mIvClose.setOnClickListener {
-            hideContent()
-        }
     }
 
     fun show() {
@@ -129,6 +127,10 @@ class WindowLayout(context: Context) : FrameLayout(context) {
         showContent()
     }
 
+    private fun clickClose() {
+        hideContent()
+    }
+
     private fun showContent() {
         mViewContent.visibility = View.VISIBLE
         mResizeView.visibility = View.VISIBLE
@@ -187,6 +189,33 @@ class WindowLayout(context: Context) : FrameLayout(context) {
                     downY = event.rawY.toInt()
                 }
                 MotionEvent.ACTION_UP -> {
+                }
+            }
+            true
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun setCloseViewTouch() {
+        var downTime = 0L
+        mIvClose.setOnTouchListener { _, event ->
+            when (event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    downTime = System.currentTimeMillis()
+                    downY = event.rawY
+                    lastY = downY
+                }
+                MotionEvent.ACTION_MOVE -> {
+                    mParams.y += (event.rawY - lastY).toInt()
+                    mParams.y = kotlin.math.max(0, mParams.y)
+                    mWM.updateViewLayout(this, mParams)
+                    lastY = event.rawY
+                }
+                MotionEvent.ACTION_UP -> {
+                    val upTime = System.currentTimeMillis() - downTime
+                    if (upTime < 150) {
+                        clickClose()
+                    }
                 }
             }
             true

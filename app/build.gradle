@@ -51,9 +51,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
     //
-//    debugImplementation project(path: ':logview')
-//    releaseImplementation project(path: ':logview-no-op')
+    debugImplementation project(path: ':logview')
+    releaseImplementation project(path: ':logview-no-op')
     //
-    debugImplementation 'me.simple:logview:1.0.2'
-    releaseImplementation 'me.simple:logview-no-op:1.0.2'
+//    debugImplementation 'me.simple:logview:1.0.2'
+//    releaseImplementation 'me.simple:logview-no-op:1.0.2'
 }
