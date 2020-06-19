@@ -35,7 +35,7 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     private val mAdapter = LogAdapter(mLogList)
 
     init {
-        View.inflate(context, R.layout.layout_log_view, this)
+        View.inflate(context, R.layout.layoutview_window_layout, this)
         mRecyclerView.layoutManager = LinearLayoutManager(context).apply {
             stackFromEnd = true
         }

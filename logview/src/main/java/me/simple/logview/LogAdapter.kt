@@ -11,7 +11,7 @@ class LogAdapter(private val items: MutableList<LogBean>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return LogHolder(inflater.inflate(R.layout.item_log, parent, false))
+        return LogHolder(inflater.inflate(R.layout.logview_item_log, parent, false))
     }
 
     override fun getItemCount() = items.size
