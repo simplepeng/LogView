@@ -40,6 +40,6 @@ class MainActivity : AppCompatActivity() {
             LogView.e(tag, "选择情绪毛球03 add.selectmood02.C[0]")
         }
 
-        btnShow.performClick()
+        LogView.showByHasPermissions()
     }
 }

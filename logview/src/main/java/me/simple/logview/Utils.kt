@@ -53,6 +53,11 @@ internal object Utils {
         mWindowLayout.show()
     }
 
+    fun showByHasPermissions() {
+        if (!canShowWindow()) return
+        mWindowLayout.show()
+    }
+
     fun dismiss() {
         mWindowLayout.dismiss()
     }

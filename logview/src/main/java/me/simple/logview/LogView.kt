@@ -36,6 +36,10 @@ object LogView {
         Utils.show()
     }
 
+    fun showByHasPermissions() {
+        Utils.showByHasPermissions()
+    }
+
     fun dismiss() {
         Utils.dismiss()
     }

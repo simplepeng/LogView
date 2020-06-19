@@ -29,6 +29,9 @@ object LogView {
     fun show() {
     }
 
+    fun showByHasPermissions() {
+    }
+
     fun dismiss() {
     }
 

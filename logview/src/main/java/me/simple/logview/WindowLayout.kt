@@ -59,7 +59,6 @@ class WindowLayout(context: Context) : FrameLayout(context) {
         }
     }
 
-
     fun show() {
         if (isShown) return
         try {
