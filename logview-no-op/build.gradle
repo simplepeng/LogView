@@ -30,7 +30,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     api 'androidx.recyclerview:recyclerview:1.1.0'
-//    api project(path: ':logview-base')
 }
 
 publish {

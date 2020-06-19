@@ -15,7 +15,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.layout_log_view.view.*
 
 
 class WindowLayout(context: Context) : FrameLayout(context) {
@@ -150,7 +149,7 @@ class WindowLayout(context: Context) : FrameLayout(context) {
     @SuppressLint("ClickableViewAccessibility")
     private fun setMenuTouch() {
         var downTime = 0L
-        ivMenu.setOnTouchListener { _, event ->
+        mIvMenu.setOnTouchListener { _, event ->
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     downTime = System.currentTimeMillis()
